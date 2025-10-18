@@ -5,8 +5,12 @@ import camp.nextstep.edu.missionutils.Console;
 public class Application {
     public static void main(String[] args) {
         String str = input();
-        long sum = calculator(str);
-        System.out.println("결과 : " + sum);
+        try {
+            long sum = calculator(str);
+            System.out.println("결과 : " + sum);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     private static String input() {
@@ -21,11 +25,19 @@ public class Application {
 
         ExtractionResult result = extractCustomDelimiters(str);
         String[] numbers = result.textToCalculate().split("[" + result.delimiters() + "]");
-
         long sum = 0;
+
         for (String numStr : numbers) {
             if (!numStr.isEmpty()) {
-                sum += Long.parseLong(numStr);
+                try {
+                    long num = Long.parseLong(numStr);
+                    if (num < 0) {
+                        throw new IllegalArgumentException("음수는 입력할 수 없습니다.");
+                    }
+                    sum += num;
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("문자열에 숫자가 아닌 값이 포함되어 있습니다.");
+                }
             }
         }
         return sum;
@@ -48,6 +60,4 @@ public class Application {
 
     private record ExtractionResult(String delimiters, String textToCalculate) {
     }
-
-
 }
