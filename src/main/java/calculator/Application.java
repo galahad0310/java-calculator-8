@@ -5,12 +5,8 @@ import camp.nextstep.edu.missionutils.Console;
 public class Application {
     public static void main(String[] args) {
         String str = input();
-        try {
-            long sum = calculator(str);
-            System.out.println("결과 : " + sum);
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
-        }
+        long sum = calculator(str); // 👈 try-catch 없이 바로 호출
+        System.out.println("결과 : " + sum);
     }
 
     private static String input() {
