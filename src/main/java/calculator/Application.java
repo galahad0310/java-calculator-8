@@ -5,7 +5,7 @@ import camp.nextstep.edu.missionutils.Console;
 public class Application {
     public static void main(String[] args) {
         String str = input();
-        long sum = calculator(str); // 👈 try-catch 없이 바로 호출
+        long sum = calculator(str);
         System.out.println("결과 : " + sum);
     }
 
